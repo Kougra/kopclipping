@@ -9,15 +9,15 @@ var secret = {
   access_token_key: '72085746-1Fuoa6Ytraz6AF1UI46CMK40WlSgzbs55mVK51gnc',
   access_token_secret: '6EqSmhYiVZnBv2Q7wVbIo84hFiUCm7siKtNUX4R4AeOqq'
 }
- var Post = mongoose.model('Post', {mensagem: String, name: String});
+ var Post = mongoose.model('Post', {mensagem: String, name: String, location: String});
 
 var Twitter = new TwitterPackage(secret);
 
 Twitter.stream('statuses/filter', {track: '@katyperry'}, function(stream) {
   stream.on('data', function(tweet) {
-    console.log(tweet.user.name);
+    console.log(tweet.user.location, tweet.user.name);
 
-    var postAtual = new Post({mensagem: tweet.text, name: tweet.user.name});
+    var postAtual = new Post({mensagem: tweet.text, name: tweet.user.name, location: tweet.user.location});
 
     postAtual.save(function(err){
       if(err){
