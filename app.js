@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 //mongoose.connect('mongodb://localhost/test');
 mongoose.connect('mongodb://user5:123456@ds139942.mlab.com:39942/kopteste');
 
+// Twitter Develop. keys
 var secret = {
   consumer_key: 'uedO2hKxmEqU5bCGKu7bxSOVd',
   consumer_secret: 'TKG390SMOdU4BQhdYt9usfVpmOfZFqco5oMsU07F5ooSjYQf7B',
@@ -17,7 +18,16 @@ Twitter.stream('statuses/filter', {track: '@katyperry'}, function(stream) {
   stream.on('data', function(tweet) {
     //console.log(tweet.user.location, tweet.user.name, tweet.text, tweet.user.followers_count, tweet.user.friends_count , tweet.id);
 
-    // postAtual com localização 
+    var Person = mongoose.model('Person', yourSchema);
+
+    Person.findOne({ "name" : { $regex: /Ghost/, $options: 'i' } },
+          function (err, person) {
+                 if (err) return handleError(err);
+                 console.log('%s %s is a %s.', person.name.first, person.name.last, person.occupation);
+
+   });
+
+    // Coincide com model Post (var)
     var postAtual = new Post({
       mensagem: tweet.text, 
       nome: tweet.user.name, 
@@ -28,7 +38,7 @@ Twitter.stream('statuses/filter', {track: '@katyperry'}, function(stream) {
       owner: "user5"});
       console.log(postAtual);
     
-    // salvando no banco
+    // Salvando no banco com trat. de erro
     postAtual.save(function(err){
       if(err){
         console.log(err);
@@ -46,4 +56,4 @@ Twitter.stream('statuses/filter', {track: '@katyperry'}, function(stream) {
 
 
 
-//"C:\Program Files\MongoDB\Server\3.4\bin\mongo.exe" ds139942.mlab.com:39942/kopteste -u user5 -p 123456;
+//"C:\Program Files\MongoDB\Server\3.4\bin\mongo.exe" ds139942.mlab.com:39942/kopteste -u user5 -p 123456
