@@ -9,16 +9,26 @@ var secret = {
   access_token_key: '72085746-1Fuoa6Ytraz6AF1UI46CMK40WlSgzbs55mVK51gnc',
   access_token_secret: '6EqSmhYiVZnBv2Q7wVbIo84hFiUCm7siKtNUX4R4AeOqq'
 }
- var Post = mongoose.model('Post', {mensagem: String, name: String, location: String});
+ var Post = mongoose.model('Post', {mensagem: String, nome: String, localizaçao: String, seguidores: Number, amigos: Number, owner: {type: String, index: true}});
 
 var Twitter = new TwitterPackage(secret);
 
 Twitter.stream('statuses/filter', {track: '@katyperry'}, function(stream) {
   stream.on('data', function(tweet) {
-    console.log(tweet.user.location, tweet.user.name);
+    //console.log(tweet.user.location, tweet.user.name, tweet.text, tweet.user.followers_count, tweet.user.friends_count , tweet.id);
 
-    var postAtual = new Post({mensagem: tweet.text, name: tweet.user.name, location: tweet.user.location});
-
+    // postAtual com localização 
+    var postAtual = new Post({
+      mensagem: tweet.text, 
+      nome: tweet.user.name, 
+      locazaçao: tweet.user.location, 
+      seguidores: tweet.user.followers_count, 
+      amigos: tweet.user.friends_count, 
+      id: tweet.id,
+      owner: "user5"});
+      console.log(postAtual);
+    
+    // salvando no banco
     postAtual.save(function(err){
       if(err){
         console.log(err);
@@ -27,9 +37,13 @@ Twitter.stream('statuses/filter', {track: '@katyperry'}, function(stream) {
       }
     });
   });
-  // salvando no banco
+  
 
   stream.on('error', function(error) {
     console.log(error);
   });
 });
+
+
+
+//"C:\Program Files\MongoDB\Server\3.4\bin\mongo.exe" ds139942.mlab.com:39942/kopteste -u user5 -p 123456;
