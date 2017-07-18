@@ -1,7 +1,7 @@
 var positivos = [
 	/wonderful/,
 	/congratulations/,
-	/thanks/,
+	/thank/,
 	/omg/,
 	/kidding/,
 	/please/,
@@ -11,14 +11,20 @@ var positivos = [
 	/queen/,
 	/beatiful/,
 	/good/,
-	/incredibly/
+	/incredibly/,
+	/clip/,
+	/videoclipe/,
+	/famosa/,
+	/famoso/
 ];
 
 // Filtra no tweet os positivos
-var cursor = db.posts.find({owner:"user5", tweet:{$in: positivos}});
+//var cursor = db.posts.find({owner:"user5", mensagem:{$in: positivos}});
 
 // Conta positivos no tweet
-var count = db.posts.find({owner:"user5", tweet:{$in: positivos}}).count();
+var count = db.posts.find({owner:"user5", mensagem:{$in: positivos}}).count();
+//var count = db.posts.find({mensagem: {$regex: "@katyperry"} ,mensagem:{$in: positivos}}).count();
 
-cursor.forEach(printjson);
+
+//cursor.forEach(printjson);
 print(count);

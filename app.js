@@ -59,3 +59,7 @@ Twitter.stream('statuses/filter', {track: '@katyperry'}, function(stream) {
 
 
 //"C:\Program Files\MongoDB\Server\3.4\bin\mongo.exe" ds139942.mlab.com:39942/kopteste -u user5 -p 123456
+
+//load("C:/Users/tecnico/Desktop/kopclipping/pos.js");
+
+//db.posts.find({owner: "user5", mensagem: {$regex: "thanks"}});

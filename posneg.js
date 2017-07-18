@@ -11,10 +11,10 @@ var negativos = [
 ];
 
 // Filtra no tweet os negativos
-var cursor = db.posts.find({owner:"user5", tweet:{$in: negativos}});
+//var cursor = db.posts.find({owner:"user5", tweet:{$in: negativos}});
 
 // Conta negativos no tweet
 var count = db.posts.find({owner:"user5", tweet:{$in: negativos}}).count();
 
-cursor.forEach(printjson);
+//cursor.forEach(printjson);
 print(count);
